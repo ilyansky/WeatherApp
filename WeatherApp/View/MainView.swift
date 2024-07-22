@@ -11,11 +11,12 @@ class MainView: UIViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.showsHorizontalScrollIndicator = false
+        view.backgroundColor = .clear
         
         return view
     }()
     
-    private let weatherView: UIView = {
+    private var weatherView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isUserInteractionEnabled = false
@@ -26,7 +27,7 @@ class MainView: UIViewController {
         super.viewDidLoad()
         weatherTypes = controller.getWeatherTypes()
         setCore()
-        setSnow()
+        setCloud()
         setUI()
     }
     
@@ -48,13 +49,13 @@ extension MainView {
         rain.emitterShape = .line
         
         let rainCell = CAEmitterCell()
-        rainCell.contents = UIImage(systemName: "drop.fill")?.cgImage
+        rainCell.contents = UIImage(systemName: "drop.fill")?.withTintColor(.systemBlue)?.cgImage
         rainCell.birthRate = 40.0
         rainCell.lifetime = 5.0
         rainCell.velocity = 200
         rainCell.velocityRange = 100
         rainCell.yAcceleration = 300
-        rainCell.scale = 0.1
+        rainCell.scale = 0.2
         rainCell.scaleRange = 0.05
         
         rain.emitterCells = [rainCell]
@@ -68,7 +69,7 @@ extension MainView {
         snow.emitterShape = .line
         
         let snowCell = CAEmitterCell()
-        snowCell.contents = UIImage(systemName: "snow")?.cgImage
+        snowCell.contents = UIImage(systemName: "snow")?.withTintColor(.systemIndigo)?.cgImage
         snowCell.birthRate = 14.0
         snowCell.lifetime = 10.0
         snowCell.velocityRange = 10
@@ -79,22 +80,128 @@ extension MainView {
         weatherView.layer.addSublayer(snow)
     }
     
+    private func setCloud() {
+        let cloud = CAEmitterLayer()
+        cloud.emitterPosition = CGPoint(x: -100, y: view.bounds.height / 2)
+        cloud.emitterSize = CGSize(width: 1, height: view.bounds.height)
+        cloud.emitterShape = .rectangle
+        
+        let cloudCell = CAEmitterCell()
+        cloudCell.contents = UIImage(systemName: "cloud.fill")?.withTintColor(.systemGray)?.cgImage
+        cloudCell.birthRate = 2.0
+        cloudCell.lifetime = 20.0
+        cloudCell.velocity = 50
+        cloudCell.velocityRange = 10
+        cloudCell.yAcceleration = 0
+        cloudCell.scale = 0.8
+        
+        cloud.emitterCells = [cloudCell]
+        weatherView.layer.addSublayer(cloud)
+    }
+    
     private func setClear() {
-        let sun = CALayer()
-        let sunSize: CGFloat = 100
-
-        sun.contents = UIImage(systemName: "sun.max.fill")?.withTintColor(.yellow).cgImage
+        let sun = CAEmitterLayer()
+        sun.emitterPosition = CGPoint(x: -100, y: view.bounds.height / 2)
+        sun.emitterSize = CGSize(width: 1, height: view.bounds.height)
+        sun.emitterShape = .rectangle
         
-        sun.bounds = CGRect(x: 0, y: 0, width: sunSize, height: sunSize)
-        sun.position = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
+        let sunCell = CAEmitterCell()
+        sunCell.contents = UIImage(systemName: "sun.max.fill")?.withTintColor(.systemYellow)?.cgImage
+        sunCell.birthRate = 2.0
+        sunCell.lifetime = 20.0
+        sunCell.velocity = 50
+        sunCell.velocityRange = 10
+        sunCell.yAcceleration = 0
+        sunCell.scale = 0.7
         
-        let rotAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotAnimation.toValue = NSNumber(value: Double.pi * 2)
-        rotAnimation.duration = 10
-        rotAnimation.isCumulative = true
-        rotAnimation.repeatCount = .infinity
-        
+        sun.emitterCells = [sunCell]
         weatherView.layer.addSublayer(sun)
+        
+    }
+    
+    private func setThunder() {
+        setRain()
+        
+        let thunderCloud = CAEmitterLayer()
+        thunderCloud.emitterPosition = CGPoint(x: -100, y: view.bounds.height / 2)
+        thunderCloud.emitterSize = CGSize(width: 1, height: view.bounds.height)
+        thunderCloud.emitterShape = .rectangle
+        
+        let thunderCell = CAEmitterCell()
+        thunderCell.contents = UIImage(systemName: "cloud.bolt.fill")?.withTintColor(.systemGray2)?.cgImage
+        thunderCell.birthRate = 2.0
+        thunderCell.lifetime = 20.0
+        thunderCell.velocity = 50
+        thunderCell.velocityRange = 10
+        thunderCell.yAcceleration = 0
+        thunderCell.scale = 0.8
+        
+        thunderCloud.emitterCells = [thunderCell]
+        weatherView.layer.addSublayer(thunderCloud)
+    }
+
+}
+
+// Targets
+extension MainView {
+    @objc func sun() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.weatherView.alpha = 0.0
+        }) { _ in
+            self.weatherView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+            self.setClear()
+            UIView.animate(withDuration: 0.3) {
+                self.weatherView.alpha = 1.0
+            }
+        }
+    }
+    
+    @objc func rain() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.weatherView.alpha = 0.0
+        }) { _ in
+            self.weatherView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+            self.setRain()
+            UIView.animate(withDuration: 0.3) {
+                self.weatherView.alpha = 1.0
+            }
+        }
+    }
+    
+    @objc func snow() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.weatherView.alpha = 0.0
+        }) { _ in
+            self.weatherView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+            self.setSnow()
+            UIView.animate(withDuration: 0.3) {
+                self.weatherView.alpha = 1.0
+            }
+        }
+    }
+    
+    @objc func cloud() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.weatherView.alpha = 0.0
+        }) { _ in
+            self.weatherView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+            self.setCloud()
+            UIView.animate(withDuration: 0.3) {
+                self.weatherView.alpha = 1.0
+            }
+        }
+    }
+    
+    @objc func thunder() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.weatherView.alpha = 0.0
+        }) { _ in
+            self.weatherView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+            self.setThunder()
+            UIView.animate(withDuration: 0.3) {
+                self.weatherView.alpha = 1.0
+            }
+        }
         
     }
 }
@@ -122,8 +229,16 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         
         cell.weatherImage.image = UIImage(named: String(indexPath.section))
         cell.weatherName.text = weatherTypes[indexPath.section]
+
+        switch indexPath.section {
+        case 0: cell.weatherButton.addTarget(self, action: #selector(sun), for: .touchUpInside)
+        case 1: cell.weatherButton.addTarget(self, action: #selector(cloud), for: .touchUpInside)
+        case 2: cell.weatherButton.addTarget(self, action: #selector(rain), for: .touchUpInside)
+        case 3: cell.weatherButton.addTarget(self, action: #selector(snow), for: .touchUpInside)
+        case 4: cell.weatherButton.addTarget(self, action: #selector(thunder), for: .touchUpInside)
+        default: break
+        }
         
-//        cell.weatherButton.addTarget(self, action: #selector(/*<#T##@objc method#>*/), for: <#T##UIControl.Event#>)
         
         return cell
     }
@@ -136,6 +251,8 @@ extension MainView {
         view.backgroundColor = .white
         view.addSubview(weatherCollectionView)
         view.addSubview(weatherView)
+        view.sendSubviewToBack(weatherView)
+        
         
         NSLayoutConstraint.activate([
             weatherCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
@@ -153,3 +270,20 @@ extension MainView {
     }
 }
 
+extension UIImage {
+    func withTintColor(_ color: UIColor) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        
+        withRenderingMode(.alwaysOriginal).draw(in: CGRect(origin: .zero, size: size))
+        
+        context.setFillColor(color.cgColor)
+        context.setBlendMode(.sourceAtop)
+        context.fill(CGRect(origin: .zero, size: size))
+        
+        let coloredImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return coloredImage
+    }
+}

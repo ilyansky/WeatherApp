@@ -48,10 +48,6 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @objc func tap() {
-        print("tap")
-    }
-    
     private func setUI() {
         addSubview(weatherButton)
         weatherButton.addSubview(weatherImage)
@@ -74,7 +70,6 @@ class WeatherCollectionViewCell: UICollectionViewCell {
             weatherName.bottomAnchor.constraint(equalTo: weatherButton.bottomAnchor, constant: -10),
         ])
     }
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
