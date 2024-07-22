@@ -3,7 +3,7 @@ import Foundation
 class Controller {
     private let model = Model()
     
-    func getWeatherTypes() -> [String] {
+    func getWeatherTypes() -> [Int: String] {
         return model.weatherTypes
     }
 }

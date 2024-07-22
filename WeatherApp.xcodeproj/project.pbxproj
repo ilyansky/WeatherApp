@@ -41,6 +41,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		870FEB9A2C4ECF3E009C88DD /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				873C1CD52C4D7AE6007306C4 /* Info.plist */,
+				873C1CD02C4D7AE6007306C4 /* Assets.xcassets */,
+				873C1CD22C4D7AE6007306C4 /* LaunchScreen.storyboard */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		873C1CBB2C4D7AE5007306C4 = {
 			isa = PBXGroup;
 			children = (
@@ -60,17 +70,31 @@
 		873C1CC62C4D7AE5007306C4 /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				873C1CC72C4D7AE5007306C4 /* AppDelegate.swift */,
-				873C1CC92C4D7AE5007306C4 /* SceneDelegate.swift */,
-				873C1CCB2C4D7AE5007306C4 /* MainView.swift */,
+				873C1CE52C4ECBFF007306C4 /* Core */,
+				873C1CE72C4ECC47007306C4 /* View */,
 				873C1CDF2C4E5F7D007306C4 /* Controller.swift */,
-				873C1CDB2C4E576D007306C4 /* WeatherCollectionViewCell.swift */,
 				873C1CDD2C4E5D55007306C4 /* Model.swift */,
-				873C1CD02C4D7AE6007306C4 /* Assets.xcassets */,
-				873C1CD22C4D7AE6007306C4 /* LaunchScreen.storyboard */,
-				873C1CD52C4D7AE6007306C4 /* Info.plist */,
+				870FEB9A2C4ECF3E009C88DD /* Support */,
 			);
 			path = WeatherApp;
+			sourceTree = "<group>";
+		};
+		873C1CE52C4ECBFF007306C4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				873C1CC72C4D7AE5007306C4 /* AppDelegate.swift */,
+				873C1CC92C4D7AE5007306C4 /* SceneDelegate.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		873C1CE72C4ECC47007306C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				873C1CCB2C4D7AE5007306C4 /* MainView.swift */,
+				873C1CDB2C4E576D007306C4 /* WeatherCollectionViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,7 +318,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FP582B2GU2;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_FILE = WeatherApp/Support/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -322,7 +346,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FP582B2GU2;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_FILE = WeatherApp/Support/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
